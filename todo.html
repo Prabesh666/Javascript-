@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>To-Do List</title>
+  <style>
+      body {
+        background: linear-gradient(120deg, #008080 0%, #FFFDD0 100%);
+        color: #36454F;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+      }
+      .todo-container {
+        background: #FFFDD0;
+        border-radius: 2.8rem;
+        box-shadow: 0 12px 40px rgba(54,69,79,0.13), 0 2px 8px rgba(54,69,79,0.08);
+        padding: 3.2rem 2.5rem 2.7rem 2.5rem;
+        max-width: 700px;
+        min-width: 380px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        margin: 1.2rem auto;
+        gap: 1.2rem;
+      }
+      .todo-container h1 {
+        color: #008080;
+        font-size: 2.5rem;
+        margin-bottom: 0.2rem;
+        letter-spacing: 1.5px;
+        text-align: left;
+        font-weight: 800;
+        margin-left: 0.2rem;
+      }
+      .todo-header-row {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin-bottom: 0.2rem;
+        gap: 0.2rem;
+      }
+      .todo-header-row-top {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        gap: 0.5rem;
+      }
+      .todo-header-row-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 0.5rem;
+      }
+      .todo-date, .todo-time {
+        color: #FFDB58;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+      .todo-input-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        gap: 0.5rem;
+        margin-bottom: 0.2rem;
+        flex-wrap: nowrap;
+        background: #FFDB58;
+        border-radius: 1.2rem;
+        padding: 0.7rem 0.7rem 0.7rem 0.9rem;
+        box-shadow: 0 1px 4px rgba(99,102,241,0.04);
+      }
+      #taskInput, #dateInput, #timeInput {
+        background: #FFFDD0;
+        color: #36454F;
+        border: 1.5px solid #FFDB58;
+        font-size: 1.18rem;
+        padding: 0.9rem 1rem;
+        border-radius: 1rem;
+        outline: none;
+        font-weight: 500;
+        box-shadow: none;
+        transition: box-shadow 0.2s;
+        min-width: 0;
+        box-sizing: border-box;
+      }
+      #taskInput:focus, #dateInput:focus, #timeInput:focus {
+        background: #FFDB58;
+        color: #36454F;
+        box-shadow: 0 2px 8px #008080AA;
+      }
+      .todo-container button {
+        background: linear-gradient(90deg, #FF7F50 60%, #008080 100%);
+        color: #FFFDD0;
+        font-size: 1.18rem;
+        border: none;
+        border-radius: 1rem;
+        padding: 0.9rem 1.2rem;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+        box-shadow: 0 1px 3px rgba(27,38,59,0.08);
+        font-weight: 700;
+        flex: 0 0 auto;
+        white-space: nowrap;
+      }
+      .todo-container button:hover {
+        background: linear-gradient(90deg, #008080 60%, #FF7F50 100%);
+        color: #FFFDD0;
+        transform: translateY(-2px) scale(1.04);
+      }
+      #taskList {
+        width: 100%;
+        padding-left: 0;
+        margin: 0;
+        list-style: none;
+        max-height: 340px;
+        overflow-y: auto;
+        margin-top: 0.5rem;
+      }
+      #taskList li {
+        background: #FFDB58;
+        color: #36454F;
+        font-size: 1.15rem;
+        border-radius: 1rem;
+        margin: 0.5rem 0;
+        padding: 0.9rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 1px 3px rgba(99,102,241,0.04);
+        transition: background 0.2s;
+        word-break: break-word;
+        flex-wrap: wrap;
+      }
+      #taskList li.completed {
+        color: #FF7F50;
+        background: #FFFDD0;
+        text-decoration: line-through;
+      }
+      .del-btn {
+        color: #FF7F50;
+        background: none;
+        border: none;
+        font-size: 1.3rem;
+        margin-left: 0.7rem;
+        cursor: pointer;
+        border-radius: 0.7rem;
+        padding: 0.3rem 0.7rem;
+        transition: background 0.2s;
+      }
+      .del-btn:hover {
+        background: #00808022;
+      }
+      .toggle-btn {
+        color: #008080;
+        background: none;
+        border: none;
+        font-size: 1.3rem;
+        margin-right: 0.7rem;
+        cursor: pointer;
+        border-radius: 0.7rem;
+        padding: 0.3rem 0.7rem;
+        transition: background 0.2s;
+      }
+      .toggle-btn:hover {
+        background: #FFFDD0;
+      }
+      @media (max-width: 700px) {
+        .todo-container {
+          max-width: 98vw;
+          min-width: 0;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+      <div class="todo-header-row">
+        <div class="todo-header-row-top">
+          <h1>My To-Do List</h1>
+        </div>
+        <div class="todo-header-row-bottom">
+          <span class="todo-date">Today: <!-- JS will fill --></span>
+          <span class="todo-time" id="localTime">--:--:--</span>
+        </div>
+      </div>
+      <div class="todo-input-row">
+        <input id="taskInput" type="text" placeholder="New task…" />
+        <input id="dateInput" type="date" />
+        <input id="timeInput" type="time" />
+        <button onclick="addTask()">Add Task</button>
+      </div>
+      <ul id="taskList"></ul>
+    </div>
+
+    <script>
+      // Update the current date display
+      function updateDate() {
+        const now = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').textContent = now.toLocaleDateString(undefined, options);
+      }
+
+      function addTask() {
+        const input = document.getElementById('taskInput');
+        const dateInput = document.getElementById('dateInput');
+        const timeInput = document.getElementById('timeInput');
+        const text = input.value.trim();
+        const date = dateInput.value;
+        const time = timeInput.value;
+        if (!text) return;
+
+        const li = document.createElement('li');
+
+        // Toggle complete button
+        const toggleBtn = document.createElement('button');
+        toggleBtn.textContent = '✔️';
+        toggleBtn.className = 'toggle-btn';
+        toggleBtn.onclick = () => {
+          li.classList.toggle('completed');
+        };
+        li.appendChild(toggleBtn);
+
+        // Task text
+        const span = document.createElement('span');
+        span.textContent = text;
+        li.appendChild(span);
+
+        // Date and time display
+        if (date || time) {
+          const schedule = document.createElement('span');
+          schedule.style.fontSize = '0.95em';
+          schedule.style.color = '#6366f1';
+          schedule.style.marginLeft = '0.7em';
+          schedule.style.fontWeight = '500';
+          let scheduleText = '';
+          if (date) scheduleText += new Date(date).toLocaleDateString();
+          if (date && time) scheduleText += ' · ';
+          if (time) scheduleText += time;
+          schedule.textContent = scheduleText;
+          li.appendChild(schedule);
+        }
+
+        // Delete button
+        const delBtn = document.createElement('button');
+        delBtn.textContent = '❌';
+        delBtn.className = 'del-btn';
+        delBtn.onclick = () => li.remove();
+        li.appendChild(delBtn);
+
+        document.getElementById('taskList').appendChild(li);
+        input.value = '';
+        dateInput.value = '';
+        timeInput.value = '';
+        input.focus();
+      }
+
+      // Set today's date in header and update local time
+      document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date();
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        document.querySelector('.todo-date').textContent = 'Today: ' + today.toLocaleDateString(undefined, options);
+        function updateTime() {
+          const now = new Date();
+          // Use user's local time zone
+          const timeString = now.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          document.getElementById('localTime').textContent = timeString;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+      });
+    </script>
+  </body>
+</html>

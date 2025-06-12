@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guess the Number Game</title>
+</head>
+<body>
+  <h1>Guess the Number (1 to 10)</h1>
+<button onclick="startGame()" style="padding: 12px 28px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer; transition: background 0.3s;">
+    🎲 Start Game
+</button>
+
+  <script>
+    function startGame() {
+      const secretNumber = Math.floor(Math.random() * 10) + 1;
+      let guess;
+
+      while (true) {
+        guess = prompt("Guess a number between 1 and 10:");
+        guess = Number(guess);
+
+        if (guess === secretNumber) {
+          alert("🎉 Correct! You guessed the number.");
+          break;
+        } else if (guess > secretNumber) {
+          alert("Too high! Try again.");
+        } else if (guess < secretNumber) {
+          alert("Too low! Try again.");
+        } else {
+          alert("Please enter a valid number.");
+        }
+      }
+    }
+  </script>
+</body>
+</html>

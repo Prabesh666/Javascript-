@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Professional Desk Watch</title>
+  <style>
+    body {
+      background: #000000;
+      color: #39FF14;
+      font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .stand {
+      width: 340px;
+      height: 34px;
+      background: linear-gradient(90deg, #2F4F4F 60%, #00B7EB 100%);
+      border-radius: 0 0 18px 18px;
+      margin-top: 2.5rem;
+      box-shadow: 0 8px 32px 0 #00B7EB99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-top: 4px solid #00B7EB;
+    }
+    .charging-dot {
+      width: 16px;
+      height: 16px;
+      background: #39FF14;
+      border-radius: 50%;
+      box-shadow: 0 0 12px 2px #39FF14;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 6px;
+      opacity: 0.8;
+    }
+    .label {
+      font-size: 1.1rem;
+      color: #00B7EB;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      text-shadow: 0 1px 0 #FFFFFF;
+    }
+    .clock-container {
+      background: linear-gradient(135deg, #2F4F4F 80%, #000000 100%);
+      box-shadow: 0 8px 32px 0 #00B7EB77;
+      border-radius: 30px;
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      border: 2px solid #00B7EB;
+      min-width: 340px;
+    }
+    #analog {
+      width: 220px;
+      height: 220px;
+      background: #000000;
+      border-radius: 50%;
+      box-shadow: 0 0 40px 2px #00B7EB33;
+      position: relative;
+      margin-bottom: 1.2rem;
+      border: 6px solid #2F4F4F;
+      overflow: visible;
+    }
+    .hand {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform-origin: 50% 100%;
+      border-radius: 4px;
+    }
+    .hand.hour {
+      width: 8px;
+      height: 54px;
+      background: #00B7EB;
+      box-shadow: 0 0 8px #00B7EB99;
+    }
+    .hand.minute {
+      width: 6px;
+      height: 80px;
+      background: #39FF14;
+      box-shadow: 0 0 12px #39FF1499;
+    }
+    .hand.second {
+      width: 3px;
+      height: 100px;
+      background: #FFFFFF;
+      box-shadow: 0 0 8px #FFFFFF99;
+    }
+    .center-dot {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      background: #00B7EB;
+      border: 3px solid #39FF14;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      box-shadow: 0 0 12px #00B7EB99;
+    }
+    #clock {
+      font-size: 2.2rem;
+      letter-spacing: 0.12em;
+      color: #39FF14;
+      background: #000000;
+      border-radius: 10px;
+      padding: 0.5rem 1.2rem;
+      margin-bottom: 0.7rem;
+      border: 1px solid #00B7EB;
+      box-shadow: 0 0 12px #00B7EB33;
+      font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+      text-shadow: 0 0 8px #00B7EB33;
+      transition: background 0.3s;
+    }
+    .led-backlight {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, #00B7EB33 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+      z-index: 0;
+    }
+    .clock-container.led-on .led-backlight {
+      opacity: 1;
+    }
+    .calendar {
+      font-size: 1rem;
+      color: #00B7EB;
+      margin-top: 0.2rem;
+      letter-spacing: 0.08em;
+      font-style: italic;
+    }
+    .branding {
+      margin-top: 1.2rem;
+      font-size: 1.05rem;
+      color: #00B7EB;
+      letter-spacing: 0.13em;
+      font-weight: bold;
+      text-shadow: 0 0 8px #00B7EB99;
+      text-transform: uppercase;
+      font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    }
+    .location-time {
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      color: #00B7EB;
+      letter-spacing: 0.09em;
+      font-weight: 500;
+      text-shadow: 0 0 8px #00B7EB99;
+      font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    }
+    /* Neon green engravings/accent ring */
+    #analog::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 2px dashed #39FF14;
+      transform: translate(-50%, -50%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="label"><b>मृत्यु पछि समय आउँदैन</b></div>
+  <div class="clock-container" id="clockContainer">
+    <div class="led-backlight" id="ledBacklight"></div>
+    <div id="analog">
+      <div class="hand hour" id="hourHand"></div>
+      <div class="hand minute" id="minuteHand"></div>
+      <div class="hand second" id="secondHand"></div>
+      <div class="center-dot"></div>
+    </div>
+    <div id="clock">--:--:--</div>
+    <div class="location-time" id="locationTime">Kathmandu, Nepal | --:--:-- AM</div>
+    <div class="calendar" id="calendar">--, -- --- ----</div>
+    
+  </div>
+  <div class="stand">
+    <div class="charging-dot"></div>
+  </div>
+  <script>
+    function updateClock() {
+      const now = new Date();
+      let h = now.getHours();
+      let m = now.getMinutes();
+      let s = now.getSeconds();
+      // 12-hour format
+      let period = h >= 12 ? 'PM' : 'AM';
+      let h12 = h % 12;
+      h12 = h12 === 0 ? 12 : h12;
+      // pad with leading zeros
+      let hStr = h12.toString().padStart(2, '0');
+      let mStr = m.toString().padStart(2, '0');
+      let sStr = s.toString().padStart(2, '0');
+      document.getElementById('clock').textContent = `${hStr}:${mStr}:${sStr} ${period}`;
+      // Location and time
+      document.getElementById('locationTime').textContent = `Kathmandu, Nepal | ${hStr}:${mStr}:${sStr} ${period}`;
+      // Analog hands
+      const hourDeg = ((now.getHours() % 12) + now.getMinutes() / 60) * 30;
+      const minDeg = (now.getMinutes() + now.getSeconds() / 60) * 6;
+      const secDeg = now.getSeconds() * 6;
+      document.getElementById('hourHand').style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
+      document.getElementById('minuteHand').style.transform = `translate(-50%, -100%) rotate(${minDeg}deg)`;
+      document.getElementById('secondHand').style.transform = `translate(-50%, -100%) rotate(${secDeg}deg)`;
+      // Calendar
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const pad = n => n.toString().padStart(2, '0');
+      document.getElementById('calendar').textContent = `${days[now.getDay()]}, ${pad(now.getDate())} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    }
+    // LED backlight toggle (touch/click or tilt)
+    const clockContainer = document.getElementById('clockContainer');
+    const ledBacklight = document.getElementById('ledBacklight');
+    let ledOn = false;
+    function toggleLED() {
+      ledOn = !ledOn;
+      if (ledOn) {
+        clockContainer.classList.add('led-on');
+      } else {
+        clockContainer.classList.remove('led-on');
+      }
+    }
+    clockContainer.addEventListener('click', toggleLED);
+    // update immediately, then every second
+    updateClock();
+    setInterval(updateClock, 1000);
+    // Remove world time display
+    document.getElementById('worldTime').style.display = 'none';
+  </script>
+</body>
+</html>
